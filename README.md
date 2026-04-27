@@ -197,11 +197,3 @@ PRs are welcome. If you have a pattern that fits, open an issue or a PR.
 ## License
 
 [MIT](LICENSE) — use it, modify it, share it.
-
----
-
-<div align="center">
-
-Built for [Claude Code](https://claude.com/claude-code) with Claude
-
-</div>
