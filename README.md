@@ -1,48 +1,46 @@
-<div dir="rtl">
-
 # Fullstack Engineer Skill
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Skill-orange)](https://claude.com/claude-code)
 [![Stars](https://img.shields.io/github/stars/Wholorp/fullstack-engineer-skill?style=social)](https://github.com/Wholorp/fullstack-engineer-skill)
 
-سكِل (Skill) لـ **Claude Code** يحوّل كلود لمهندس Full-Stack محترف. يضمن إن أي كود تكتبه أو تطلبه يكون نظيف، آمن، مكتوب بـTypes، قابل للاختبار، ومبني على أساس صلب.
+A **Claude Code** skill that turns Claude into a senior full-stack engineer. Every piece of code becomes clean, secure, fully typed, testable, and built on a foundation that scales.
 
 ---
 
-## ايش الفائدة؟
+## Why use it?
 
-بدون السكل، كلود يكتب كود يشتغل بس مو دايم production-ready. مع السكل:
+Without the skill, Claude writes code that works but isn't always production-ready. With the skill:
 
-- **بنية مشروع واضحة** — modules مفصولة (router/controller/service/repository)
-- **TypeScript strict mode** — لا `any` بدون سبب، types end-to-end
-- **API design موحّد** — RESTful، envelope ثابت `{success, data}` / `{success, error}`، versioning من اليوم الأول
-- **أمان built-in** — bcrypt 12+ rounds, helmet, rate limit, CORS محدّد, JWT صحيح
-- **DB best practices** — migrations دائماً، indexes على FKs، soft delete، pagination
-- **Error handling** — `AppError` class + global middleware، ما يسرّب stack traces
-- **Frontend patterns** — Zustand للـclient state, TanStack Query للـserver state, React Hook Form + Zod
-- **Workflow واضح** — Schema → Contract → Scaffold → Bottom-up implementation
+- **Clear project structure** — feature modules (router/controller/service/repository)
+- **TypeScript strict mode** — no `any` without reason, types end-to-end
+- **Consistent API design** — RESTful, unified envelope `{success, data}` / `{success, error}`, versioned from day one
+- **Security baked in** — bcrypt 12+ rounds, helmet, rate limiting, scoped CORS, proper JWT
+- **DB best practices** — always migrations, indexes on FKs, soft delete, pagination
+- **Error handling** — `AppError` class + global middleware, no leaked stack traces
+- **Frontend patterns** — Zustand for client state, TanStack Query for server state, React Hook Form + Zod
+- **Clear workflow** — Schema → Contract → Scaffold → Bottom-up implementation
 
-### الفرق العملي
+### The practical difference
 
-| الجانب | بدون السكل | مع السكل |
-|--------|-----------|----------|
-| **CORS** | `app.use(cors())` مفتوح | مقيّد بـorigin محدّد |
-| **Auth** | endpoint بدون حماية | rate limit + bcrypt + JWT صحيح |
-| **Types** | `any` في كل مكان | shared types بين front/back |
-| **Errors** | `console.log` | Logger مركزي + `AppError` |
+| Aspect | Without skill | With skill |
+|--------|---------------|------------|
+| **CORS** | `app.use(cors())` open | scoped to specific origin |
+| **Auth** | endpoint with no protection | rate limit + bcrypt + proper JWT |
+| **Types** | `any` everywhere | shared types front/back |
+| **Errors** | `console.log` | central logger + `AppError` |
 | **DB** | hard delete + N+1 | soft delete + indexes + pagination |
-| **Tests** | لا شيء | integration tests للـhappy + error |
-| **Structure** | كل شي في `routes/` | feature modules مستقلة |
+| **Tests** | none | integration tests for happy + error paths |
+| **Structure** | everything in `routes/` | independent feature modules |
 
 ---
 
-## مثال قبل/بعد
+## Before / After Example
 
-### الطلب
-> "ابني لي endpoint لتسجيل الدخول"
+### Request
+> "Build me a login endpoint"
 
-### بدون السكل
+### Without the skill
 ```js
 app.post('/login', async (req, res) => {
   const user = await db.query(`SELECT * FROM users WHERE email='${req.body.email}'`);
@@ -53,9 +51,9 @@ app.post('/login', async (req, res) => {
   }
 });
 ```
-**مشاكل**: SQL injection، password بدون hash، JWT secret hardcoded، لا rate limit، لا validation، error envelope غير موحّد.
+**Issues**: SQL injection, plaintext password, hardcoded JWT secret, no rate limit, no validation, inconsistent error envelope.
 
-### مع السكل
+### With the skill
 ```ts
 // users.schema.ts
 export const loginSchema = z.object({
@@ -86,21 +84,21 @@ router.post('/login', authLimiter, login);
 
 ---
 
-## التثبيت
+## Installation
 
-### المشروع الواحد
+### Per project
 ```bash
 git clone https://github.com/Wholorp/fullstack-engineer-skill.git \
   .claude/skills/fullstack-engineer
 ```
 
-### عام (متاح لكل مشاريعك)
+### Globally (available across all your projects)
 ```bash
 git clone https://github.com/Wholorp/fullstack-engineer-skill.git \
   ~/.claude/skills/fullstack-engineer
 ```
 
-البنية النهائية:
+Final structure:
 ```
 ~/.claude/skills/fullstack-engineer/
 ├── SKILL.md
@@ -112,61 +110,60 @@ git clone https://github.com/Wholorp/fullstack-engineer-skill.git \
 
 ---
 
-## الاستعمال
+## Usage
 
-### تفعيل تلقائي
-السكل يفعّل لما تطلب:
+### Auto-trigger
+The skill activates when you ask things like:
 
-| العربي | English |
-|--------|---------|
-| "ابني لي backend" | "build a backend" |
-| "اعمل API لـ..." | "create an API for..." |
-| "ابغا مشروع كامل" | "scaffold a fullstack app" |
-| "design a database schema" | "design DB schema" |
-| "best practices لـ..." | "best practices for..." |
-| "ابني نظام..." | "build a system for..." |
+- "build a backend"
+- "create an API for..."
+- "scaffold a fullstack app"
+- "design a database schema"
+- "best practices for..."
+- "build a system for..."
+- "production-ready architecture"
 
-### تفعيل صريح
+### Explicit
 ```
-/fullstack-engineer ابني لي نظام مهام
+/fullstack-engineer build me a task management system
 ```
 
-### مثال كامل
+### Full example
 ```
-انت: ابني لي API لإدارة المستخدمين
-كلود: [يفعّل السكل]
-       1. يسأل: ايش الحقول؟ ايش العمليات؟ من يصادق؟
-       2. يصمم Prisma schema
-       3. يعرّف API contract (TypeScript types)
-       4. يبني bottom-up: repo → service → controller → router
-       5. يضيف Zod validation + AppError + tests
-       6. يلخّص: ايش بنى، ايش ناقص، الخطوة الجاية
+You: build me an API for user management
+Claude: [activates the skill]
+        1. Asks: what fields? what operations? who authenticates?
+        2. Designs Prisma schema
+        3. Defines API contract (TypeScript types)
+        4. Builds bottom-up: repo → service → controller → router
+        5. Adds Zod validation + AppError + tests
+        6. Summarizes: what's built, what's missing, next step
 ```
 
 ---
 
-## ايش جوّاه؟
+## What's inside?
 
-| الملف | المحتوى |
+| File | Content |
 |------|---------|
-| `SKILL.md` | الفلسفة، stack الافتراضي، بنية المشروع، معايير الكود، workflow |
+| `SKILL.md` | Philosophy, default stack, project structure, code standards, workflow |
 | `references/backend-patterns.md` | CQRS, queues, caching, advanced patterns |
-| `references/frontend-patterns.md` | optimistic updates, infinite scroll, code splitting, PWA |
-| `references/security-checklist.md` | checklist كاملة قبل launch |
+| `references/frontend-patterns.md` | Optimistic updates, infinite scroll, code splitting, PWA |
+| `references/security-checklist.md` | Full pre-launch security checklist |
 
 ---
 
-## Stack الافتراضي
+## Default Stack
 
-| الطبقة | التقنية |
-|--------|---------|
-| **Backend Runtime** | Node.js + TypeScript (أو Python FastAPI) |
+| Layer | Technology |
+|-------|------------|
+| **Backend Runtime** | Node.js + TypeScript (or Python FastAPI) |
 | **Framework** | Express / Fastify / FastAPI |
-| **Database** | PostgreSQL أو MongoDB |
-| **ORM** | Prisma (TS) أو SQLAlchemy (Py) |
+| **Database** | PostgreSQL or MongoDB |
+| **ORM** | Prisma (TS) or SQLAlchemy (Py) |
 | **Auth** | JWT + refresh tokens |
-| **Validation** | Zod (TS) أو Pydantic (Py) |
-| **Frontend** | React + TypeScript (Next.js للـSSR) |
+| **Validation** | Zod (TS) or Pydantic (Py) |
+| **Frontend** | React + TypeScript (Next.js for SSR) |
 | **Styling** | Tailwind CSS |
 | **State** | Zustand + TanStack Query |
 | **Forms** | React Hook Form + Zod |
@@ -175,36 +172,36 @@ git clone https://github.com/Wholorp/fullstack-engineer-skill.git \
 
 ---
 
-## متى تستعمله؟
+## When to use it
 
-✅ مشروع جديد من الصفر
-✅ refactor لمشروع قائم
-✅ مراجعة كود (code review)
-✅ تعليم best practices
-✅ نظام يحتاج يكبر مع الوقت
+Good fit:
+- New project from scratch
+- Refactor of an existing project
+- Code review
+- Teaching best practices
+- Systems that need to scale over time
 
-❌ سكربت سريع لمرة واحدة (over-engineering)
-❌ prototype للتجربة فقط
-❌ ملف HTML بسيط
-
----
-
-## المساهمة
-
-PRs مرحّب بها. إذا عندك pattern تحس ينفع، افتح issue أو PR.
+Not a good fit:
+- Quick one-off scripts (over-engineering)
+- Throwaway prototypes
+- Simple HTML files
 
 ---
 
-## الترخيص
+## Contributing
 
-[MIT](LICENSE) — استخدمه، عدّله، شاركه.
+PRs are welcome. If you have a pattern that fits, open an issue or a PR.
+
+---
+
+## License
+
+[MIT](LICENSE) — use it, modify it, share it.
 
 ---
 
 <div align="center">
 
-صُنع لـ [Claude Code](https://claude.com/claude-code) بـ Claude
-
-</div>
+Built for [Claude Code](https://claude.com/claude-code) with Claude
 
 </div>
